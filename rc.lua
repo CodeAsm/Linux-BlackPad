@@ -131,7 +131,8 @@ myawesomemenu = {
 games = {
    { "Steam", "/usr/bin/primusrun steam" },
    { "zSnes", "/usr/bin/zsnes" },
-   { "Minecraft", "/usr/bin/minecraft" }
+   { "Minecraft", "/usr/bin/minecraft" },
+   { "tekkit", "/usr/bin/tekkit" }
 }
 tools = {
    { "Transmission", "/usr/bin/transmission" },
@@ -322,6 +323,7 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 15") end),
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 15") end),
+    awful.key({ modkey, "Shift"   }, "Super_L", function () awful.util.spawn("physlock") end),  
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
