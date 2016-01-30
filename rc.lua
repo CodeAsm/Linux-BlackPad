@@ -111,7 +111,9 @@ local layouts =
 
 --  {{{ Tags
 tags = {
-  names   = { "一", "二", "三", "四", "五", "六", "七", "八", "九", "十" },
+    -- 
+    --1 = ? 2 = ? 3 = ? 4 = ? 5 = ? 6 = ? 7 = ? 8 = ? 9 = ? 10 = ?
+  names   = { "?", "?", "?", "?", "?", "?", "?", "?", "?", "?" },
   layouts = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2],
               layouts[2], layouts[2], layouts[2], layouts[2], layouts[2] } }
 
@@ -320,9 +322,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end)
 )
 
+
+-- Added some smoothing in the backlight
 clientkeys = awful.util.table.join(
-    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("xbacklight -dec 15") end),
-    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("xbacklight -inc 15") end),
+        -- Brightness
+
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        awful.util.spawn("xbacklight -display :0 -dec 15") end),
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+        awful.util.spawn("xbacklight -display :0 -inc 15") end),
     awful.key({ modkey, "Shift"   }, "Super_L", function () awful.util.spawn("physlock") end),  
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
@@ -495,7 +503,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 -- Netmwork Manager ...
-os.execute("nm-applet &")
+-- os.execute("nm-applet &") --old way, the less easy way
+-- awful.util.spawn("nm-applet") -- the better, non-duplicate way?
+awful.util.spawn_with_shell("run_once nm-applet") -- best duplicate way by me.
 
 
 -- battery warning
@@ -509,8 +519,8 @@ local function bat_notification()
   local bat_capacity = tonumber(f_capacity:read("*all"))
   local bat_status = trim(f_status:read("*all"))
 
-   if (bat_capacity >= 30 and bat_capacity <= 50 and bat_status == "Discharging") then
-    naughty.notify({ title      = "Battery is getting low"
+   if (bat_capacity >= 30 and bat_capacity <= 60 and bat_status == "Discharging") then
+    naughty.notify({ title      = "Battery is discharging"
       , text       = "Battery lowering " .. bat_capacity .."%" .. " left"
       , fg="#ffffff"
       , bg="#111A11"
