@@ -1,0 +1,184 @@
+Added extra commands and tricks to bashrc aswell. colors for root.
+Edited PS1 for better caracter control and added root bash.bashrc
+========================================================================================
+#
+# /etc/bash.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+PS2='> '
+PS3='> '
+PS4='+ '
+
+case ${TERM} in
+  xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
+    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+
+    ;;
+  screen)
+    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+    ;;
+esac
+
+[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+
+#added some root stuff for colors. but not everything as command upgrades
+alias ls='ls --color=auto'
+
+export EDITOR="nano"
+CURRENTUSER=`whoami`
+if [ "$CURRENTUSER" = "root" ]; then
+
+  PS1="\[\033[35m\]\t\[\033[m\] \`if [ \$? = 0 ]; then echo \[\e[32m\]${EMG}?\[\e[0m\]; else echo \[\e[31m\]${EMG}? \[\e[0m\]; fi\`[\[\033[1;31m\]\u\[\033[0m\]@\[\e[1;34m\]\h\[\e[0m\]:\[\e[94m\]\w\[\e[0m\]]\\$ \[\e[m\]" 
+  
+else
+
+#My personal favorite Bash PS1 with colors and bad or good last command icon.
+PS1="\[\033[35m\]\t\[\033[m\] \`if [ \$? = 0 ]; then echo \[\e[32m\]${EMG}?\[\e[0m\]; else echo \[\e[31m\]${EMG}? \[\e[0m\]; fi\`[\[\e[92m\]\u\[\e[0m\]@\[\e[1;34m\]\h\[\e[0m\]:\[\e[94m\]\w\[\e[0m\]]\\$ \[\e[m\]" 
+
+fi
+========================================================================================
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+alias ls='ls --color=auto'
+
+export EDITOR="nano"
+export HISTIGNORE="pwd;passwd"
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# enlagre limited Max opened files
+ulimit -n 1024
+
+#efficient tricks and typo fixes
+# a quick way to get out of current directory ##
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias path='echo -e ${PATH//:/\\n}'
+alias nowdate='date +"%d-%m-%Y"'
+
+CURRENTUSER=`whoami`
+if [ "$CURRENTUSER" = "root" ]; then
+
+  PS1="\[\033[35m\]\t\[\033[m\] \`if [ \$? = 0 ]; then echo \[\e[32m\]${EMG}ツ\[\e[0m\]; else echo \[\e[31m\]${EMG}✗ \[\e[0m\]; fi\`[\[\033[1;31m\]\u\[\033[0m\]@\[\e[1;34m\]\h\[\e[0m\]:\[\e[94m\]\w\[\e[0m\]]\\$ \[\e[m\]" 
+  
+else
+
+#My personal favorite Bash PS1 with colors and bad or good last command icon.
+PS1="\[\033[35m\]\t\[\033[m\] \`if [ \$? = 0 ]; then echo \[\e[32m\]${EMG}ツ\[\e[0m\]; else echo \[\e[31m\]${EMG}✗ \[\e[0m\]; fi\`[\[\e[92m\]\u\[\e[0m\]@\[\e[1;34m\]\h\[\e[0m\]:\[\e[94m\]\w\[\e[0m\]]\\$ \[\e[m\]" 
+
+fi
+========================================================================================
+Edited PS1 for nice bashshell: PS1='[\[\e[0;39m\]\t \[ツ\]\[\e[0;32m\]\u\[\e[m\]@\[\e[1;32m\]\h\[\e[m\]\[\e[1;34m\]\w\[\e[m\]]\[\e[1;34m\]\$\[\e[m\]'
+Installed imagemagic for taking screenshots (import should now work)
+added script capscr to capture a screenshot, will add to awesome a shortcut for this.
+Font probably wont work because US asci, instead of UTF8
+(they kind off work, but not great, here are some great tricks : https://github.com/Guff/Awesome-config-files/blob/master/misc/notifications.lua
+installed xorg-xbacklight (so hotkeys work in awesome (Fn+Brithness btns)
+created a run_once script and added scripts to the $PATH
+========================================================================================
+#!/bin/bash
+#Alternative
+pgrep $@ > /dev/null || ($@ &)
+========================================================================================
+tweaked awesome
+edited fstab (made 2 backups aswell) to add LFS as a new dir inside /mnt
+fstab is untested, but if no notes are made, its left like this.
+========================================================================================
+# UUID=1fd13332-8ef6-45cc-ad5b-0f9ab445f45f
+/dev/sdb3           	/   	ext4      	rw,discard,relatime,data=ordered	0 1
+
+# UUID=967F-B3D0 LABEL=SYSTEM
+/dev/sdb2           	/boot     	vfat      	rw,discard,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro	0 2
+
+/dev/sda1 		/mnt/data 	ntfs-3g  rw,errors=remount-ro,defaults,relatime,windows_names,locale=en_US.utf8  0 0
+
+/dev/sdb4               /mnt/lfs    ext4        rw,discard,errors=remount-ro,relatime,data=ordered       0 2
+========================================================================================
+changed /etc/systemd/logind.conf HandleLidSwitch=suspend to ignore (and decomment the line)
+Installed Firefox (and Adblock pro)
+Installed NetworkManager and its applet (this enables the applet in Awesome)
+Installed Kate and Krusader (takes both 200 mb of shit)
+Installed Awesome and xorg-service
+Installed Gparted (gui partitioning)
+Added a hostname
+changed Xorg.conf (based on Nvidia config) (Also tried to fix input device problems)
+========================================================================================
+# nvidia-xconfig: X configuration file generated by nvidia-xconfig
+# nvidia-xconfig:  version 358.16  (buildmeister@swio-display-x64-rhel04-12)  Mon Nov 16 19:59:11 PST 2015
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0"
+  # InputDevice    "Keyboard0" "CoreKeyboard"
+  # InputDevice    "Mouse0" "CorePointer"
+EndSection
+
+Section "Files"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+    # generated from default
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "Unknown"
+    HorizSync       28.0 - 33.0
+    VertRefresh     43.0 - 72.0
+    Option         "DPMS"
+EndSection
+
+Section "Device"
+    Identifier     "nvidia"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce GT 635M"
+    BusID          "PCI:1:0:0"
+EndSection
+
+Section "Device"
+    Identifier     "intel"
+    Driver         "intel"
+    BusID          "PCI:0:2:0"
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "intel"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+========================================================================================
+Installed Nvidia drivers
+Installed Bumblebee
+installed Xf86-intel stuff (and the config that belonged to the wiki
+installed xorg extra utils to have startx and xterm and stuff.

@@ -1,0 +1,1 @@
+efibootmgr -n 4
