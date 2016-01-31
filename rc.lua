@@ -333,9 +333,9 @@ clientkeys = awful.util.table.join(
         -- Brightness
 
     awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.util.spawn("xbacklight -display :0 -dec 15") end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("xbacklight -display :0 -inc 15") end),
+        awful.util.spawn("xbacklight -dec 20") end),
+    awful.key({ }, "XF86MonBrightnessUp",false, function ()
+        awful.util.spawn("xbacklight -inc 20") end),
     awful.key({ modkey, "Shift"   }, "Super_L", function () awful.util.spawn("physlock") end),  
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
