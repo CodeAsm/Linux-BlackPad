@@ -261,6 +261,7 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+    
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
@@ -324,6 +325,11 @@ globalkeys = awful.util.table.join(
 
 -- Added some smoothing in the backlight
 clientkeys = awful.util.table.join(
+    
+    -- bind PrintScrn to capture a screen
+   awful.key( { }, "Print",function()
+           awful.util.spawn("capscr",false) end),
+    
         -- Brightness
 
     awful.key({ }, "XF86MonBrightnessDown", function ()
