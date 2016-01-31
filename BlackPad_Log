@@ -1,3 +1,19 @@
+>> Added the home folder to Git,
+    this could be dangerous, but helpfull aswell.
+    I might need to get more people to answer me on this and advice me.
+    This might result in less info for this logbook
+    What have I done for this?
+    ===========================================
+    checkedout the old LinuxBlackpad folder remotely.
+    Removed the folder entirely
+    cleaned the folders a bit
+    Made a new branch called 'expanding'
+    added the whole folder $HOME (actualy only selected files i want
+    with exception of alott of extra files.
+    got these files up to the remote git and they are there now.
+    added kate configs
+    writing this text and will commit this with a statement for today.
+    ===========================================
 Added extra commands and tricks to bashrc aswell. colors for root.
 Edited PS1 for better caracter control and added root bash.bashrc
 ========================================================================================
