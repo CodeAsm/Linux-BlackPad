@@ -16,6 +16,7 @@
 [profiles]
   [[default]]
     audible_bell = True
+    background_darkness = 0.76
     background_image = None
     background_type = transparent
     font = Monospace 10

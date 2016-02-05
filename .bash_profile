@@ -6,3 +6,5 @@
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 PATH=$PATH:~/scripts
 export PATH
+$LFS=/mnt/lfs
+

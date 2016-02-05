@@ -1,0 +1,72 @@
+begin
+ prog = vlc
+ button = KEY_0
+ config = key-play-pause
+end
+begin
+ prog = vlc
+ button = KEY_ENTER
+ config = key-play-pause
+end
+begin
+ prog = vlc
+ button = KEY_ZOOM
+ config = key-stop
+end
+begin
+ prog = vlc
+ button = KEY_CHANNELUP
+ config = key-next
+end
+begin
+ prog = vlc
+ button = KEY_CHANNELDOWN
+ config = key-prev
+end
+begin
+ prog = vlc
+ button = KEY_3
+ config = key-next
+end
+begin
+ prog = vlc
+ button = KEY_1
+ config = key-prev
+end
+begin
+ prog = vlc
+ button = KEY_2
+ config = key-nav-up
+end
+begin
+ prog = vlc
+ button = KEY_8
+ config = key-nav-down
+end
+begin
+ prog = vlc
+ button = KEY_4
+ config = key-nav-left
+end
+begin
+ prog = vlc
+ button = KEY_6
+ config = key-nav-right
+end
+begin
+ prog = vlc
+ button = KEY_VOLUMEUP
+ config = key-vol-up
+ repeat = 1
+end
+begin
+ prog = vlc
+ button = KEY_VOLUMEDOWN
+ config = key-vol-down
+ repeat = 1
+end
+begin
+ prog = vlc
+ button = KEY_MUTE
+ config = key-vol-mute
+end
