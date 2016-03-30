@@ -7,6 +7,8 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+local vicious = require("vicious")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -132,17 +134,23 @@ myawesomemenu = {
 games = {
    { "Steam", "/usr/bin/primusrun steam" },
    { "zSnes", "/usr/bin/zsnes" },
-   { "Minecraft", "/usr/bin/minecraft" },
-   { "tekkit", "/usr/bin/tekkit" }
+   { "Minecraft", "/usr/bin/minecraft" }
 }
 tools = {
-   { "Transmission", "/usr/bin/transmission" },
+   { "Transmission", "/usr/bin/transmission-qt" },
    { "Krusader", "/usr/bin/krusader" },
-   { "Kate", "/usr/bin/kate" }
+   { "Dolphin", "/usr/bin/dolphin" },
+   { "Kate", "/usr/bin/kate" },
+   { "Gparted [R]", "gksu /usr/bin/gparted" }
 }
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Games", games },
+xbox = {
+   { "xbox MU", "xbox mu" },
+   { "xbox Network", "xbox network" }
+}
+mymainmenu = awful.menu({ items = { { "Games", games },
 				    { "Tools", tools },
+				    { "Xbox", xbox },
+                                    { "awesome", myawesomemenu, beautiful.awesome_icon },
 				    { "open terminal", terminal },
 				    {"Firefox", "/usr/bin/firefox"}
                                   }
@@ -161,6 +169,7 @@ mytextclock = awful.widget.textclock()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
+mywiboxBottom = {}   -- Le Bottom versione
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -226,9 +235,9 @@ for s = 1, screen.count() do
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
-    -- Create the wibox
+    -- Create the wibox for top
     mywibox[s] = awful.wibox({ position = "top", screen = s })
-
+  
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
@@ -248,6 +257,68 @@ for s = 1, screen.count() do
     layout:set_right(right_layout)
 
     mywibox[s]:set_widget(layout)
+    
+    
+    
+    -- Bottom layout stuff =================================
+    --- ****************************************
+-- Initialize widget
+memwidget = wibox.widget.textbox()
+-- Register widget
+vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
+
+
+-- Initialize widget
+memwidgetbar = awful.widget.progressbar()
+-- Progressbar properties
+memwidgetbar:set_width(8)
+memwidgetbar:set_height(10)
+memwidgetbar:set_vertical(true)
+memwidgetbar:set_background_color("#494B4F")
+memwidgetbar:set_border_color(nil)
+memwidgetbar:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
+                    {1, "#FF5656"}}})
+-- Register widget
+vicious.register(memwidgetbar, vicious.widgets.mem, "$1", 13)
+
+
+
+-- Initialize widget
+cpuwidget = awful.widget.graph()
+-- Graph properties
+cpuwidget:set_width(50)
+cpuwidget:set_background_color("#494B4F")
+cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"}, 
+                    {1, "#AECF96" }}})
+-- Register widget
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+
+
+
+-- ***********************************************
+        
+        
+  -- This my bottom version?
+    mywiboxBottom[s] = awful.wibox({ position = "bottom", screen = s })
+
+    
+     -- Widgets that are aligned to the left
+    local bottom_left_layout = wibox.layout.fixed.horizontal()
+    bottom_left_layout:add(memwidget)
+
+    -- Widgets that are aligned to the right
+    local bottom_right_layout = wibox.layout.fixed.horizontal()
+    bottom_right_layout:add(memwidgetbar)
+bottom_right_layout:add(cpuwidget)
+    -- Now bring it all together (with the tasklist in the middle)
+    local bottom_layout = wibox.layout.align.horizontal()
+    bottom_layout:set_left(bottom_left_layout)
+    bottom_layout:set_right(bottom_right_layout)
+
+    
+    mywiboxBottom[s]:set_widget(bottom_layout)
+    
+    ---- ===================Bottom =================
 end
 -- }}}
 
@@ -553,6 +624,16 @@ local function bat_notification()
       , position   = "bottom_right"
     })
   end
+  
+  if (bat_capacity <= 30 and bat_status == "Charging") then
+    naughty.notify({ title      = "Battery charging"
+      , text       = "Battery is at " .. bat_capacity .."%" .. ""
+      , fg="#ffffff"
+      , bg="#112A11"
+      , timeout    = 15
+      , position   = "bottom_right"
+    })
+  end
 end
 
 battimer = timer({timeout = 60})
@@ -560,3 +641,4 @@ battimer:connect_signal("timeout", bat_notification)
 battimer:start()
 
 -- end here for battery warning
+
