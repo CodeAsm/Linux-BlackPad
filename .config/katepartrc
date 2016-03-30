@@ -14,6 +14,7 @@ Indentation Width=4
 Keep Extra Spaces=false
 Line Length Limit=4096
 Newline At EOF=false
+Newline at End of File=true
 On-The-Fly Spellcheck=false
 Overwrite Mode=false
 PageUp/PageDown Moves Cursor=false
