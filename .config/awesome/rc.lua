@@ -282,7 +282,6 @@ memwidgetbar:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops 
 vicious.register(memwidgetbar, vicious.widgets.mem, "$1", 13)
 
 
-
 -- Initialize widget
 cpuwidget = awful.widget.graph()
 -- Graph properties
