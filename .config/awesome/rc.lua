@@ -309,6 +309,19 @@ cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = {
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
 
+-- ips widget: show internal and external ips as a tooltip on
+-- an icon.
+
+-- function to call bash script and return its output.
+function get_ips()
+    local fd = io.popen("getips")
+    local str = fd:read("*all")
+    return str 
+end
+
+-- Set up the tooltip, initializing to the output of get_ips()
+ips_t = awful.tooltip({ objects = { cpuwidget},})
+ips_t:set_text(get_ips())
 
 -- ***********************************************
         
