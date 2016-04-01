@@ -136,11 +136,17 @@ games = {
    { "zSnes", "/usr/bin/zsnes" },
    { "Minecraft", "/usr/bin/minecraft" }
 }
+Office = {
+   { "Kate", "/usr/bin/kate" },
+   { "LibreOffice", "/usr/bin/libreoffice"},
+   { "Gimp", "/usr/bin/gimp"}
+}
+
+
 tools = {
    { "Transmission", "/usr/bin/transmission-qt" },
    { "Krusader", "/usr/bin/krusader" },
    { "Dolphin", "/usr/bin/dolphin" },
-   { "Kate", "/usr/bin/kate" },
    { "Gparted [R]", "gksu /usr/bin/gparted" }
 }
 xbox = {
@@ -148,6 +154,7 @@ xbox = {
    { "xbox Network", "xbox network" }
 }
 mymainmenu = awful.menu({ items = { { "Games", games },
+				    { "Office tools", Office },
 				    { "Tools", tools },
 				    { "Xbox", xbox },
                                     { "awesome", myawesomemenu, beautiful.awesome_icon },

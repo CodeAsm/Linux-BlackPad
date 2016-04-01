@@ -37,7 +37,7 @@ Fallback Encoding=ISO-8859-15
 
 [Renderer]
 Animate Bracket Matching=false
-Schema=Normal
+Schema=Solarized (dark)
 Show Indentation Lines=false
 Show Whole Bracket Expression=false
 Word Wrap Marker=false
