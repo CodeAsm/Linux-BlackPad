@@ -1,0 +1,14 @@
+#!/bin/bash
+cd ~/xqemu
+if [ $1 = "chihiro" ]; then
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine chihiro,mediaboard_rom=bios/mediaboard_rom.bin -m 128 -bios bios/chihiro_bios.bin
+elif [ $1 = "mu" ]; then
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 64 -drive file=harddisk/xbox_harddisk.qcow2,index=0,media=disk,locked=on -drive index=1,media=cdrom -bios bios/complex_4627debug.bin -drive if=none,id=stick,file=harddisk/mu.raw -drive if=none,id=stick2,file=harddisk/mu2.raw -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2 -device usb-storage,bus=usb-bus.0,port=3.3,drive=stick -device usb-storage,bus=usb-bus.0,port=3.4,drive=stick2
+elif [ $1 = "usb" ]; then
+cd /home/codeasm/xqemu/
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 64 -drive file=harddisk/xbox_harddisk.qcow2,index=0,media=disk,locked=on -drive index=1,media=cdrom -bios bios/complex_4627debug.bin -drive if=none,id=stick,file=/dev/sdc -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2 -device usb-storage,bus=usb-bus.0,port=3.3,drive=stick
+elif [ $1 = "network" ]; then
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 64 -drive file=harddisk/xbox_harddisk.qcow2,index=0,media=disk,locked=on -drive index=1,media=cdrom -bios bios/complex_4627debug.bin -drive if=none,id=stick,file=harddisk/mu.raw -drive if=none,id=stick2,file=harddisk/mu2.raw -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2 -device usb-storage,bus=usb-bus.0,port=3.3,drive=stick -device usb-storage,bus=usb-bus.0,port=3.4,drive=stick2 -global nvnet.dump=xbox_net_packets.txt -net nic,model=nvnet -net user -net socket,listen=:1236 
+else
+nano "Xbox emu"
+fi

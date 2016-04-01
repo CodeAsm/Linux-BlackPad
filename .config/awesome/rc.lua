@@ -278,15 +278,24 @@ vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
 -- Initialize widget
 memwidgetbar = awful.widget.progressbar()
 -- Progressbar properties
-memwidgetbar:set_width(8)
+memwidgetbar:set_width(50)
 memwidgetbar:set_height(10)
-memwidgetbar:set_vertical(true)
-memwidgetbar:set_background_color("#494B4F")
+memwidgetbar:set_vertical(false)
+memwidgetbar:set_background_color("#00003D")
 memwidgetbar:set_border_color(nil)
-memwidgetbar:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
-                    {1, "#FF5656"}}})
+memwidgetbar:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#78FFAB"}, {0.5, "#57B114"}, 
+                    {1, "#FE2A2A"}}})
+-- RAM usage tooltip
+memwidget_t = awful.tooltip({ objects = { memwidgetbar.widget },})                   
+                    
+vicious.cache(vicious.widgets.mem)
+vicious.register(memwidgetbar, vicious.widgets.mem,
+                function (widget, args)
+                    memwidget_t:set_text(" RAM: " .. args[2] .. "MB / " .. args[3] .. "MB ")
+                    return args[1]
+                 end, 13)
+                 --update every 13 seconds
 -- Register widget
-vicious.register(memwidgetbar, vicious.widgets.mem, "$1", 13)
 
 
 -- Initialize widget
@@ -311,6 +320,7 @@ vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
      -- Widgets that are aligned to the left
     local bottom_left_layout = wibox.layout.fixed.horizontal()
     bottom_left_layout:add(memwidget)
+    bottom_left_layout:add(memwidgetbar)
 
     -- Widgets that are aligned to the right
     local bottom_right_layout = wibox.layout.fixed.horizontal()
