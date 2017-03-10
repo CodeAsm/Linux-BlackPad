@@ -1,0 +1,11 @@
+*
+!.gitattributes
+!.gitignore
+!.config/*/
+!readme.md
+!.gitkeep
+!.config/katepartrc
+!.config/katerc
+!.config/terminator/config
+!scripts/
+!Wallpaper/

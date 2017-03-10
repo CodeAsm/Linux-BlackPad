@@ -1,3 +1,6 @@
+[FileDialogSize]
+Window-Maximized 768x1366=true
+
 [General]
 Config Revision=10
 Days Meta Infos=30
@@ -12,15 +15,20 @@ Show Status Bar=true
 Show Tab Bar=true
 Startup Session=manual
 
+[KFileDialog Settings]
+Recent Files[$e]=config,file:$HOME/README.md,file:$HOME/packages,file:///etc/X11/xorg.conf,file:$HOME/Tips/Add resolution,file:$HOME/.xinitrc,file:$HOME/BlackPad_Log,file:$HOME/prop,file:$HOME/.gitignore,file:$HOME/.config/terminator/config
+Recent URLs[$e]=file:$HOME/.config/terminator/,file:$HOME/Tips/,file:///etc/X11/
+
 [KTextEditor::Search]
 Replace History=
 Search History=--{{{ Wibox,font
 
 [MainWindow]
 Height 768=364
-State=AAAA/wAAAAD9AAAAAAAAAmkAAAFZAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
+State=AAAA/wAAAAD9AAAAAAAABVYAAAKhAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
 ToolBarsMovable=Disabled
 Width 1366=617
+Window-Maximized 768x1366=true
 
 [filetree]
 editShade=179,218,246
