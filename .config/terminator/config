@@ -15,10 +15,9 @@
 [profiles]
   [[default]]
     audible_bell = True
-    background_darkness = 0.76
+    background_darkness = 0.98
     background_type = transparent
     cursor_color = "#aaaaaa"
     font = Monospace 10
-    show_titlebar = True
     use_system_font = False
     visible_bell = True

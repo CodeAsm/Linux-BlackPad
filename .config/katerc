@@ -1,10 +1,16 @@
+[Desktop Entry]
+DefaultProfile=
+
+[Favorite Profiles]
+Favorites=
+
 [FileDialogSize]
 Window-Maximized 768x1366=true
 
 [General]
 Config Revision=10
 Days Meta Infos=30
-Last Session=
+Last Session=Xbox 360
 Modified Notification=false
 Recent File List Entry Count=10
 Restore Window Configuration=true
@@ -16,18 +22,20 @@ Show Tab Bar=true
 Startup Session=manual
 
 [KFileDialog Settings]
-Recent Files[$e]=config,file:$HOME/README.md,file:$HOME/packages,file:///etc/X11/xorg.conf,file:$HOME/Tips/Add resolution,file:$HOME/.xinitrc,file:$HOME/BlackPad_Log,file:$HOME/prop,file:$HOME/.gitignore,file:$HOME/.config/terminator/config
-Recent URLs[$e]=file:$HOME/.config/terminator/,file:$HOME/Tips/,file:///etc/X11/
+Recent Files[$e]=file:$HOME/XBone/res_path.h,file:$HOME/scripts/comp,file:$HOME/scripts/windows,file:$HOME/scripts/xbox,file:$HOME/Eink,file:$HOME/z80/src/main.cpp,file:$HOME/qemu/picoTux/initramfs/x86-busybox/init,file:$HOME/qemu/picoTux/qemu,file:$HOME/arduino,file:$HOME/Gameduino/notes,file:$HOME/Zonnepanelen,file:$HOME/packages,file:$HOME/index.html,file:$HOME/sims/crack/license van Nico Vijlbrief,file:$HOME/sims/sims1_Disk1.iso
+Recent URLs[$e]=file:$HOME/Turok/Turok4/,file:$HOME/Turok/,file:$HOME/z80/src/,file:$HOME/XBone/,file:$HOME/Xbox360/shadowboot/,file:$HOME/scripts/
 
 [KTextEditor::Search]
 Replace History=
-Search History=--{{{ Wibox,font
+Search History=nvnet,dev,~/SimsData/,getBytes,UPC2475618,ec:8a:4c:93:a6:3,xA1,GFV,venger,Avenger,xDash,ash,pb_wait_until_gr_not_busy,times,ExQueryNonVolatileSetting,\n  if (ExQueryNonVolatileSetting(XC_USER_SETTINGS\\, &type\\, &eepromdata\\, sizeof(eepromdata)\\, &size) < 0),BUS_0,PciReadDword,PciWriteDword,XCreateThread,50,sprintf,debugPr,XC_USER_SETTINGS,EEPROM_USER_SETTINGS,EEPROM_INDEX_MACADDR,\n    debugPrint,debugPrint,g_s,Ethaddr,type,EEPROM_INDEX_M,len,5229,mmc,pb_target_extra_buffer,version_string,version_string_index,boot,mediab,protocol,HalPulse,screen,--{{{ Wibox,font
 
 [MainWindow]
-Height 768=364
-State=AAAA/wAAAAD9AAAAAAAABVYAAAKhAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
+Height 768=703
+State=AAAA/wAAAAD9AAAAAAAABVYAAAJ7AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
 ToolBarsMovable=Disabled
-Width 1366=617
+Width 1366=1366
+Window-Maximized 1080x1920=true
+Window-Maximized 480x640=true
 Window-Maximized 768x1366=true
 
 [filetree]
