@@ -25,7 +25,7 @@ fi
 elif [ $1 = "cd" ]; then
 xqemu-git/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 64 -drive file=harddisk/xbox_harddisk.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=1 -device usb-xbox-gamepad,bus=usb-bus.0,port=1.2 
 elif [ $1 = "dev" ]; then
-xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 128 -drive file=harddisk/xbox_dev.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 128 -drive file=harddisk/xbox_development.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2
 elif [ $1 = "update" ]; then
 xqemu-git/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.1.bin -m 64 -drive file=harddisk/xbox2.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/EvoxM7_ef_huge-g_red.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2
 elif [ $1 = "audio" ]; then
@@ -33,9 +33,9 @@ xqemu-audio/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_anim
 elif [ $1 = "mcpx" ]; then
 xqemu-git/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.1.bin -m 64 -drive file=harddisk/xbox_harddisk.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/EvoxM7_ef_huge-g_red.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2
 elif [ $1 = "con" ]; then
-xqemu-git/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.1.bin -m 64 -drive file=harddisk/xbox_harddisk.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/EvoxM7_ef_huge-g_red.bin -usb -device usb-host,bus=usb-bus.0,port=3,vendorid=0x45e,productid=0x28e
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 64 -drive file=harddisk/xbox_harddisk2.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2
 elif [ $1 = "net" ]; then
-xqemu-git/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 128 -drive file=harddisk/xboxlive.qcow2,index=0,media=disk,locked=on -drive index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2 -global nvnet.dump=xbox_net_packets_multi.txt -net nic,model=nvnet -net user -net socket,connect=127.0.0.1:8010 
+xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 128 -drive file=harddisk/xboxlive.qcow2,index=0,media=disk,locked=on -drive index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2 -global nvnet.dump=xbox_net_packets_multi.txt -net nic,model=nvnet -net user -net socket,connect=127.0.0.1:8010 
 elif [ $1 = "dvt4" ]; then
 xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=mcpx/mcpx_1.0.bin -m 128 -drive file=harddisk/xbox_devkit.qcow2,index=0,media=disk,locked=on -drive file=$2,index=1,media=cdrom -bios bios/old/complex_4627debug.bin -usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2
 else
