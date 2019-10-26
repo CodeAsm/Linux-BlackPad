@@ -10,6 +10,7 @@ export EDITOR="nano"
 export HISTIGNORE="pwd;passwd"
 # append to the history file, don't overwrite it
 shopt -s histappend
+export MSBuildSDKsPath="/opt/dotnet/sdk/2.2.108/Sdks/";
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 # check the window size after each command and, if necessary,
@@ -24,8 +25,9 @@ ulimit -n 1024
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../../../'
-alias path='echo -e ${PATH//:/\\n}'
-alias nowdate='date +"%d-%m-%Y"'
+#alias path='echo -e ${PATH//:/\\n}'
+alias today='date +"%d-%m-%Y"'
+alias todaytime='date +"%d-%m-%Y %H:%M"'
 
 CURRENTUSER=`whoami`
 if [ "$CURRENTUSER" = "root" ]; then

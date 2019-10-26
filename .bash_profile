@@ -4,6 +4,5 @@
 #source ~/.git-completion.bash No worky 
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-PATH=$PATH:~/scripts
-export PATH
+PATH=$PATH:~/scripts:/usr/local/bin
 $LFS=/mnt/lfs 
