@@ -1,1 +1,0 @@
-efibootmgr -n 3
