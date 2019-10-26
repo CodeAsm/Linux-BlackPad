@@ -1,0 +1,82 @@
+#!/bin/bash
+cd /home/codeasm/Games/Xbox/
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -cd|--cdrom|-iso)
+    CD="$2"
+    shift; shift # past argument and value
+    ;;-bios|-kernel|-k)
+    KERNEL="$2"
+    shift; shift # past argument and value
+    ;;-m|--memory|-mem)
+    MEM="$2"
+    shift; shift # past argument and value
+    ;;-hdd|--harddisk)
+    HDD="$2"
+    shift; shift # past argument and value
+    ;;-mu|-memoryunit)
+    MU="-drive if=none,id=C1A,file=$2,format=raw -device usb-storage,port=3.2,drive=C1A"
+    shift; shift # past argument and value
+    ;;-mcpx|--mcpx)
+    MCPX="$2"
+    shift; shift # past argument and value
+    ;;-net|--network)
+    NET="$2"
+    shift; shift # past argument and value
+    ;;-eeprom|-e)
+    EEPROM="-eeprom $2"
+    shift; shift # past argument and value
+     ;;-kd|--kerneldebug)
+    KD="-device lpc47m157 -serial unix:/tmp/xserial,server"
+    shift;# past argument and value
+     ;;-kdxp|-fullkd)
+    KD="-device lpc47m157 -serial tcp:127.0.0.1:9090"
+    shift;# past argument and value
+    ;;-usb|-4400)
+    USB="-usb -device usb-xbox-gamepad,bus=usb-bus.0"
+    shift; # past argument and value
+    ;;
+    
+esac
+done
+
+if [ -z $KERNEL ]; then
+    KERNEL="bios/complex_4627debug.bin"; fi
+if [ -z $HDD ]; then
+    HDD="harddisk/xbox_harddisk.qcow2"; fi
+if [ -z $MCPX ]; then
+    MCPX="mcpx/mcpx_1.0.bin"; fi
+if [ -z $MEM ]; then
+    MEM="64"; fi
+if [ $CD ]; then
+    CDfull="file=""${CD}"","; fi
+if [ -z $USB ]; then    
+     USB=""; fi
+#    USB="-usb -device usb-hub,bus=usb-bus.0,port=3 -device usb-xbox-gamepad,bus=usb-bus.0,port=3.2"; fi
+    #sudo xqemu/xqemu/xbox-softmmu/qemu-system-xbox -cpu pentium3 -machine xbox,short_animation,bootrom=xqemu/mcpx/mcpx_1.0.bin -m 64 -drive file=xqemu/harddisk/xbox_development.qcow2,index=0,media=disk,locked=on -drive index=1,media=cdrom -bios xqemu/bios/complex_4627debug.bin -usb -device usb-host,vendorid=0x45e,productid=0x289,bus=usb-bus.0,port=3 -usb -device usb-host,vendorid=0xabcd,productid=0x1234,bus=usb-bus.0,port=3
+
+printf "Xbox dvd-disk \t\t %s" ${CD}
+printf "\n\rKernel/Bios \t\t %s" ${KERNEL}
+printf "\n\rMemory size \t\t %s" ${MEM}
+printf "\n\rMCPX version \t\t %s" ${MCPX}
+printf "\n\rHarddisk \t\t %s" ${HDD}
+printf "\n\rUSB \t\t %s" ${USB}
+printf "\n\rMemory unit \t\t %s" "${MU}"
+
+
+printf "\n\r-----------------------------\n\r"
+
+#xqemu/i386-softmmu/qemu-system-i386 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} -device usb-xbox-gamepad,bus=usb-bus.1,port=3${USB} ${NET} ${KD}
+
+#xqemu/i386-softmmu/qemu-system-i386 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} -drive if=none,id=C1A,file=muTest2.bin,format=raw -device usb-hub,bus=usb-bus.1,port=3 -device usb-xbox-gamepad,port=3.2 -device usb-storage,port=3.4,drive=C1A
+
+# latest worked XQemu
+#xqemu/i386-softmmu/qemu-system-i386 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} -drive if=none,id=C1A,file=muTest2.bin,format=raw -device usb-hub,bus=usb-bus.1,port=3 -device usb-xbox-gamepad,port=3.2 -device usb-storage,port=3.4,drive=C1A ${KD}
+
+xqemu/i386-softmmu/qemu-system-i386 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} ${KD} -device usb-hub,port=3 -usb -device usb-xbox-gamepad ${MU} ${EEPROM}
+
+#xqemu/i386-softmmu/qemu-system-i386 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} ${KD} -device usb-hub,port=3 -device usb-xbox-gamepad,port=3.1 -device lpc47m157 -serial unix:/tmp/xserial,server
+
+#xqemu/i386-softmmu/qemu-system-i386 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} -device usb-xbox-gamepad-sdl,index=0

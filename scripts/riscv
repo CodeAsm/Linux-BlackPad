@@ -1,0 +1,34 @@
+#!/bin/bash
+cd /home/codeasm/
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -cd|--cdrom)
+    CD="$2"
+    shift; shift # past argument and value
+    ;;-m|--memory|-mem)
+    MEM="$2"
+    shift; shift # past argument and value
+    ;;-n|--net|-net)
+    NET="$2"
+    shift; shift # past argument and value
+    ;;-hdd|--harddisk)
+    HDD="$2"
+    shift; shift # past argument and value
+    ;;xenon)
+    EXTRA="$2"
+    shift; shift # past argument and value
+    ;;sims)
+    HDD="hdd/winSims.qcow2"
+    MEM="512"
+    shift; shift # past argument and value
+    ;;
+esac
+done
+
+printf "ISO is \t\t %s" ${CD}
+printf "\n\rMemory size \t\t %s" ${MEM}
+printf "\n\rHarddisk \t\t %s" ${HDD}
+
+qemu-system-riscv64 -machine virt 

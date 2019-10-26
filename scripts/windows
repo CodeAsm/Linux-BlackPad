@@ -1,0 +1,54 @@
+#!/bin/bash
+cd /home/codeasm/Projects/Emulation/Windows
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -cd|--cdrom)
+    CD="$2"
+    shift; shift # past argument and value
+    ;;-m|--memory|-mem)
+    MEM="$2"
+    shift; shift # past argument and value
+    ;;-n|--net|-net)
+    NET="$2"
+    shift; shift # past argument and value
+    ;;-hdd|--harddisk)
+    HDD="$2"
+    shift; shift # past argument and value
+    ;;kernel)
+    HDD="hdd/winXP_xboxdev.qcow2"
+    shift # past argument and value
+    ;;xbox)
+    HDD="hdd/xboxdev.qcow2"
+    shift # past argument and value
+    ;;kd) 
+    SERIAL="-serial tcp::9090,server,nowait"
+    shift # past argument and value
+    ;;311|dos)
+    HDD="hdd/dos.qcow2"
+    NET="-soundhw sb16,adlib,pcspk"
+    MEM="16"
+    shift # past argument and value
+    ;;sims)
+    HDD="hdd/winSims.qcow2"
+    MEM="512"
+    shift; shift # past argument and value
+    ;;
+esac
+done
+
+if [ -z $HDD ]; then
+    HDD="hdd/winXP.qcow2"; fi
+if [ -z $MEM ]; then
+    MEM="256"; fi
+if [ -z $NET ]; then
+    NET="-net nic,model=rtl8139 -net user,smb=/home/codeasm/Projects/Emulation/smb/ "; fi
+if [ $CD ]; then
+    CDfull="-cdrom ""${CD}"" -boot d"; fi
+    
+printf "ISO is \t\t %s" ${CD}
+printf "\n\rMemory size \t\t %s" ${MEM}
+printf "\n\rHarddisk \t\t %s" ${HDD}
+
+qemu-system-i386 -enable-kvm -m size=${MEM} -drive file=${HDD},format=qcow2 ${NET} -soundhw es1370 ${SERIAL}

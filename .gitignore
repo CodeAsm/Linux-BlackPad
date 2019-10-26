@@ -1,4 +1,3 @@
-*
 !.gitattributes
 !.gitignore
 !.config/*/
@@ -7,4 +6,3 @@
 !.config/katepartrc
 !.config/katerc
 !.config/terminator/config
-
