@@ -16,6 +16,9 @@ case $key in
     ;;-hdd|--harddisk)
     HDD="$2"
     shift; shift # past argument and value
+    ;;-usb)
+    USB="-usb -device usb-host,bus=usb-bus.0,hostbus=2,hostaddr=$2"
+    shift; shift
     ;;kernel)
     HDD="hdd/winXP_xboxdev.qcow2"
     shift # past argument and value
@@ -38,8 +41,7 @@ case $key in
 esac
 done
 
-if [ -z $HDD ]; then
-    HDD="hdd/winXP.qcow2"; fi
+
 if [ -z $MEM ]; then
     MEM="256"; fi
 if [ -z $NET ]; then
@@ -47,8 +49,13 @@ if [ -z $NET ]; then
 if [ $CD ]; then
     CDfull="-cdrom ""${CD}"" -boot d"; fi
     
+    
 printf "ISO is \t\t %s" ${CD}
 printf "\n\rMemory size \t\t %s" ${MEM}
 printf "\n\rHarddisk \t\t %s" ${HDD}
 
-qemu-system-i386 -enable-kvm -m size=${MEM} -drive file=${HDD},format=qcow2 ${NET} -soundhw es1370 ${SERIAL}
+qemu-system-i386 -enable-kvm -m size=${MEM}     \
+    -drive file=${HDD},format=qcow2             \
+    ${NET} -soundhw es1370                      \
+    -usb -device usb-kbd --usbdevice tablet     \
+    ${SERIAL} ${USB}                            \
