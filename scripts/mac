@@ -1,59 +1,31 @@
 #!/bin/bash
-cd /home/codeasm/Mac
-while [[ $# -gt 0 ]]
-do
-key="$1"
-case $key in
-    -cd|--cdrom)
-    CD="$2"
-    shift; shift # past argument and value
-    ;;-m|--memory|-mem)
-    MEM="$2"
-    shift; shift # past argument and value
-    ;;-n|--net|-net)
-    NET="$2"
-    shift; shift # past argument and value
-    ;;-hdd|--harddisk)
-    HDD="$2"
-    shift; shift # past argument and value
-    ;;xenon)
-    EXTRA="$2"
-    shift; shift # past argument and value
-    ;;sims)
-    HDD="hdd/winSims.qcow2"
-    MEM="512"
-    shift; shift # past argument and value
-    ;;
-esac
-done
+cd ~/Projects/Emulation/Apple
 
-if [ -z $HDD ]; then
-    HDD="MacOSX.qcow2"; fi
-if [ -z $MEM ]; then
-    MEM="3072"; fi
-if [ -z $NET ]; then
-    NET="-net nic -net user,smb=smb/ "; fi
-if [ $CD ]; then
-    CDfull="-cdrom ""${CD}"" -boot d"; fi
-    
-printf "ISO is \t\t %s" ${CD}
-printf "\n\rMemory size \t\t %s" ${MEM}
-printf "\n\rHarddisk \t\t %s" ${HDD}
+OSK="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
+VMDIR=$PWD
+OVMF=$VMDIR/firmware
+#export QEMU_AUDIO_DRV=pa
+#QEMU_AUDIO_DRV=pa
 
-qemu-system-x86_64 -enable-kvm -m ${MEM} -cpu Penryn,kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,+pcid,+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsave,+xsaveopt,check\
-	  -machine pc-q35-2.9 \
-	  -smp 4,cores=2 \
-	  -usb -device usb-kbd -device usb-tablet \
-	  -device isa-applesmc,osk="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc" \
-	  -drive if=pflash,format=raw,readonly,file=firmware/OVMF_CODE-pure-efi.fd \
-	  -drive if=pflash,format=raw,file=firmware/OVMF_VARS-pure-efi-1024x768.fd \
-	  -smbios type=2 \
-	  -device ich9-intel-hda -device hda-duplex \
-	  -device ide-drive,bus=ide.2,drive=Clover \
-	  -drive id=Clover,if=none,snapshot=on,format=qcow2,file=firmware/Clover.qcow2 \
-	  -device ide-drive,bus=ide.1,drive=MacHDD \
-	  -drive id=MacHDD,if=none,file=./${HDD},format=qcow2 \
-          -netdev user,id=net0 -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:c9:18:27 \
-	  -device ide-drive,bus=ide.3,drive=xenon \
-	  -drive id=xenon,if=none,file=/home/codeasm/Xbox360/AlphaG5/xenon.img,format=raw
-          #          -device usb-host,hostbus=1,hostaddr=4
+qemu-system-x86_64 \
+    -enable-kvm \
+    -m 4G \
+    -machine q35,accel=kvm \
+    -smp 4,cores=2 \
+    -cpu Penryn,vendor=GenuineIntel,kvm=on,+sse3,+sse4.2,+aes,+xsave,+avx,+xsaveopt,+xsavec,+xgetbv1,+avx2,+bmi2,+smep,+bmi1,+fma,+movbe,+invtsc \
+    -device isa-applesmc,osk="$OSK" \
+    -smbios type=2 \
+    -drive if=pflash,format=raw,readonly,file="$OVMF/OVMF_CODE.fd" \
+    -drive if=pflash,format=raw,file="$OVMF/OVMF_VARS-1024x768.fd" \
+    -vga qxl \
+    -device ich9-intel-hda -device hda-output \
+    -usb -device usb-kbd --usbdevice tablet\
+    -netdev user,id=net0 \
+    -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:c9:18:27 \
+    -device ich9-ahci,id=sata \
+    -drive id=ESP,if=none,format=qcow2,file=ESP.qcow2 \
+    -device ide-hd,bus=sata.2,drive=ESP \
+    -drive id=SystemDisk,if=none,file=MacOSX.qcow2 \
+    -device ide-hd,bus=sata.4,drive=SystemDisk \
+    -drive id=InstallMedia,format=raw,if=none,file=BaseSystem.img \
+    -device ide-hd,bus=sata.3,drive=InstallMedia \
