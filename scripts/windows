@@ -33,9 +33,9 @@ case $key in
     NET="-soundhw sb16,adlib,pcspk"
     MEM="16"
     shift # past argument and value
-    ;;sims)
-    HDD="hdd/winSims.qcow2"
-    MEM="512"
+    ;;games)
+    HDD="hdd/win-games.qcow2"
+    MEM="1024"
     shift; shift # past argument and value
     ;;
 esac
@@ -49,7 +49,7 @@ if [ -z $NET ]; then
 if [ $CD ]; then
     CDfull="-cdrom ""${CD}"" -boot d"; fi
     
-    
+    #FJGCP-4DFJD-GJY49-VJBQ7-HYRR2 7 ulti
 printf "ISO is \t\t %s" ${CD}
 printf "\n\rMemory size \t\t %s" ${MEM}
 printf "\n\rHarddisk \t\t %s" ${HDD}
@@ -58,4 +58,4 @@ qemu-system-i386 -enable-kvm -m size=${MEM}     \
     -drive file=${HDD},format=qcow2             \
     ${NET} -soundhw es1370                      \
     -usb -device usb-kbd --usbdevice tablet     \
-    ${SERIAL} ${USB}                            \
+    ${SERIAL} ${USB} -hdb ~/Projects/Emulation/image.dd                      \
