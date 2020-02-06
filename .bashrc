@@ -41,8 +41,6 @@ PS1="\[\033[35m\]\t\[\033[m\] \`if [ \$? = 0 ]; then echo \[\e[32m\]${EMG}ツ\[\
 
 fi
 
-
-
-
 #(__git_ps1 "%s")
 #$(__git_ps1 "%s")
+. ~/.bash_profile

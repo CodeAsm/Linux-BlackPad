@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ~/Projects/Emulation/Apple
+cd /home/codeasm/Projects/Emulation/Apple
 
 OSK="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 VMDIR=$PWD
@@ -29,3 +29,4 @@ qemu-system-x86_64 \
     -device ide-hd,bus=sata.4,drive=SystemDisk \
     -drive id=InstallMedia,format=raw,if=none,file=BaseSystem.img \
     -device ide-hd,bus=sata.3,drive=InstallMedia \
+#    -usb -device usb-host,bus=usb-bus.0,hostbus=2,hostaddr=6 \

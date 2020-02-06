@@ -58,4 +58,4 @@ qemu-system-i386 -enable-kvm -m size=${MEM}     \
     -drive file=${HDD},format=qcow2             \
     ${NET} -soundhw es1370                      \
     -usb -device usb-kbd --usbdevice tablet     \
-    ${SERIAL} ${USB} -hdb ~/Projects/Emulation/image.dd                      \
+    ${SERIAL} ${USB} ${CDfull}                  \
