@@ -40,8 +40,10 @@ case $key in
     ;;-usb|-4400)
     USB="-usb -device usb-xbox-gamepad,bus=usb-bus.0"
     shift; # past argument and value
+    ;;-ftp)
+    EEPROM="-net nic -net user,hostfwd=tcp::2220-:21"
+    shift; # past argument and value
     ;;
-    
 esac
 done
 

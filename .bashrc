@@ -10,7 +10,7 @@ export EDITOR="nano"
 export HISTIGNORE="pwd;passwd"
 # append to the history file, don't overwrite it
 shopt -s histappend
-export MSBuildSDKsPath="/opt/dotnet/sdk/2.2.108/Sdks/";
+export MSBuildSDKsPath="/usr/share/dotnet/sdk/3.1.103/Sdks";
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 # check the window size after each command and, if necessary,

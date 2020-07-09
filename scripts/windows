@@ -45,11 +45,12 @@ done
 if [ -z $MEM ]; then
     MEM="256"; fi
 if [ -z $NET ]; then
-    NET="-net nic,model=rtl8139 -net user,smb=/home/codeasm/Projects/Emulation/smb/ "; fi
+    #NET="-net nic,model=rtl8139 -net user,smb=/home/codeasm/Projects/Emulation/smb/win "; fi
+    NET="-net nic,model=rtl8139 -net tap,ifname=tap0,script=no "; fi
 if [ $CD ]; then
     CDfull="-cdrom ""${CD}"" -boot d"; fi
     
-    #FJGCP-4DFJD-GJY49-VJBQ7-HYRR2 7 ulti
+    
 printf "ISO is \t\t %s" ${CD}
 printf "\n\rMemory size \t\t %s" ${MEM}
 printf "\n\rHarddisk \t\t %s" ${HDD}
@@ -57,5 +58,4 @@ printf "\n\rHarddisk \t\t %s" ${HDD}
 qemu-system-i386 -enable-kvm -m size=${MEM}     \
     -drive file=${HDD},format=qcow2             \
     ${NET} -soundhw es1370                      \
-    -usb -device usb-kbd --usbdevice tablet     \
     ${SERIAL} ${USB} ${CDfull}                  \
