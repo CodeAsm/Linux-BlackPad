@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PING=www.duckduckgo.com
+PING=1.1.1.1
 WIFI=wifi
 
 wpa_supplicant -B -i wlp3s0 -c /etc/wpa_supplicant/$WIFI.conf
