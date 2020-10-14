@@ -7,6 +7,9 @@ case $key in
     -cd|--cdrom|-iso)
     CD="$2"
     shift; shift # past argument and value
+    ;;-d|debug)
+    MONITOR="-S -s"
+    shift; # past argument and value
     ;;-bios|-kernel|-k)
     KERNEL="$2"
     shift; shift # past argument and value
@@ -76,4 +79,4 @@ xqemu/i386-softmmu/qemu-system-i386 \
 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} \
 -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on \
 -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} ${KD} \
--device usb-hub,port=3 -usb -device usb-xbox-gamepad,port=3.1 ${MU} ${EEPROM} ${MONITOR}
+-device usb-hub,port=3 -usb -device usb-xbox-gamepad,port=3.1 ${MU} ${EEPROM} ${MONITOR} ${NET}
