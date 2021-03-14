@@ -12,6 +12,10 @@ export HISTIGNORE="pwd;passwd"
 shopt -s histappend
 export MSBuildSDKsPath="/usr/share/dotnet/sdk/3.1.103/Sdks";
 
+# Use this when using SSH and GnuPG
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
