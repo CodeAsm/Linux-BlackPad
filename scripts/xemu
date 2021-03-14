@@ -1,0 +1,5 @@
+#!/bin/bash
+cd /home/codeasm/Games/Xbox/
+
+xemu/dist/xemu -device lpc47m157 -serial stdio -net tap,ifname=tap1,script=no -net nic,model=nvnet
+#-net nic,model=nvnet -net tap,ifname=tap0,script=no

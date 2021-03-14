@@ -28,6 +28,9 @@ case $key in
     ;;-net|--network)
     NET="$2"
     shift; shift # past argument and value
+    ;;-dev|-devkit|-debug)
+    NET="-net nic,model=nvnet -net tap,ifname=tap0,script=no"
+    shift; # past argument 
     ;;-eeprom|-e)
     EEPROM="-eeprom $2"
     shift; shift # past argument and value

@@ -23,7 +23,7 @@ case $key in
     HDD="hdd/winXP_xboxdev.qcow2"
     shift # past argument and value
     ;;xbox)
-    HDD="hdd/xboxdev.qcow2"
+    HDD="hdd/XDEV.qcow2"
     shift # past argument and value
     ;;kd) 
     SERIAL="-serial tcp::9090,server,nowait"
@@ -35,7 +35,7 @@ case $key in
     shift # past argument and value
     ;;games)
     HDD="hdd/win-games.qcow2"
-    MEM="1024"
+    MEM="2G"
     shift; shift # past argument and value
     ;;
 esac
@@ -43,19 +43,31 @@ done
 
 
 if [ -z $MEM ]; then
-    MEM="256"; fi
+    MEM="2G"; fi
 if [ -z $NET ]; then
     #NET="-net nic,model=rtl8139 -net user,smb=/home/codeasm/Projects/Emulation/smb/win "; fi
-    NET="-net nic,model=rtl8139 -net tap,ifname=tap0,script=no "; fi
+    NET=" -net nic,model=rtl8139,macaddr=E4:1F:13:AD:D5:02 -net tap,ifname=tap0,script=no "; fi
 if [ $CD ]; then
     CDfull="-cdrom ""${CD}"" -boot d"; fi
-    
-    
-printf "ISO is \t\t %s" ${CD}
+if [ -z $HDD ]; then
+    HDD="hdd/GAMES.qcow2"; fi
+# -device ES1370
+if [ -z $SOUND ]; then
+    SOUND="-device AC97"; fi
+ 
+
+if [ $CD ]; then    
+printf "ISO is \t\t %s" ${CD}; fi
 printf "\n\rMemory size \t\t %s" ${MEM}
 printf "\n\rHarddisk \t\t %s" ${HDD}
+printf "\n\rSoundcard \t\t %s" ${SOUND}
+printf "\n"
 
 qemu-system-i386 -enable-kvm -m size=${MEM}     \
+    -smp 2 -cpu host                            \
     -drive file=${HDD},format=qcow2             \
-    ${NET} -soundhw es1370                      \
+    ${NET} -sdl -vga std                        \
+    -device vt82c686b-usb-uhci,id=uhci          \
+    -device usb-mouse,bus=uhci.0                \
+    ${SOUND}                                    \
     ${SERIAL} ${USB} ${CDfull}                  \

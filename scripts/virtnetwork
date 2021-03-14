@@ -1,0 +1,49 @@
+#!/bin/bash 
+UNDO=false
+USER=codeasm #or $(whoami)
+
+function network {
+if [ $UNDO != true  ]; then
+
+    echo "[ Setting up bridge Network ]" 
+ip link add name br0 type bridge
+ip addr add dev br0 192.168.66.66/24
+ip link set br0 up
+tunctl -t tap0 -u $USER
+brctl addif br0 tap0
+tunctl -t tap1 -u $USER
+brctl addif br0 tap1
+ip link set tap0 up
+ip link set tap1 up
+systemctl restart iptables
+systemctl restart dnsmasq
+else
+
+    echo "[ Removing bridge Network ]" 
+systemctl stop iptables
+systemctl stop dnsmasq
+ip link set tap0 down
+ip link set tap1 down
+ip link delete tap0
+ip link delete tap1
+ip link delete br0 type bridge
+
+fi
+
+}
+
+#process commandline arguments
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -d|-u)
+    UNDO=true
+    shift; shift # past argument and value
+    ;;
+esac
+done
+
+network
+
+#https://stackoverflow.com/questions/2953646/how-can-i-declare-and-use-boolean-variables-in-a-shell-script
