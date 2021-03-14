@@ -17,8 +17,8 @@ case $key in
     HDD="$2"
     shift; shift # past argument and value
     ;;-usb)
-    USB="-usb -device usb-host,bus=usb-bus.0,hostbus=2,hostaddr=$2"
-    shift; shift
+    USB="-usb -device usb-host,bus=usb-bus.0,hostbus=$2,hostaddr=$3"
+    shift; shift; shift
     ;;kernel)
     HDD="hdd/winXP_xboxdev.qcow2"
     shift # past argument and value
