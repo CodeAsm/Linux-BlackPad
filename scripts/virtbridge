@@ -1,13 +1,14 @@
 #!/bin/bash 
 UNDO=false
 USER=codeasm #or $(whoami)
+NET=enp12s0
 
 function network {
 if [ $UNDO != true  ]; then
 
     echo "[ Setting up bridge Network ]" 
 ip link add name br0 type bridge
-ip addr add dev br0 192.168.66.66/24
+ip addr add dev br0 192.168.66.1/24
 ip link set br0 up
 tunctl -t tap0 -u $USER
 brctl addif br0 tap0
@@ -40,6 +41,9 @@ case $key in
     -d|-u)
     UNDO=true
     shift; shift # past argument and value
+    ;;-eth|-e)
+    NET=$2
+    shift; shift # past argument and value
     ;;
 esac
 done
@@ -47,3 +51,21 @@ done
 network
 
 #https://stackoverflow.com/questions/2953646/how-can-i-declare-and-use-boolean-variables-in-a-shell-script
+
+
+# expand-hosts
+# domain=router,192.168.66.66
+
+#dnsmasq
+
+# #listen-address=192.168.6.66   # Specify the address to listen on  
+# bind-interfaces      # Bind to the interface
+# server=1.1.1.1      # Use Google DNS  
+# domain-needed        # Don't forward short names  
+# bogus-priv           #drop nonroutesd adress spacws       
+# # We want dnsmasq to listen on br0 interface.
+# interface=br0
+# # We provide a dhcp range for dnsmasq
+# dhcp-range=192.168.66.1,192.168.66.254,12h
+# #servers
+# address=/.xboxlive.com/192.168.2.67
