@@ -14,7 +14,10 @@ case $key in
     NET="$2"
     shift; shift # past argument and value
     ;;-hdd|--harddisk)
-    HDD="$2"
+    HDD="$2,format=qcow2"
+    shift; shift # past argument and value
+    ;;-rhdd|--realharddisk)
+    HDD="$2,format=raw"
     shift; shift # past argument and value
     ;;-usb)
     USB="-usb -device usb-host,bus=usb-bus.0,hostbus=$2,hostaddr=$3"
@@ -63,9 +66,10 @@ printf "\n\rHarddisk \t\t %s" ${HDD}
 printf "\n\rSoundcard \t\t %s" ${SOUND}
 printf "\n"
 
-qemu-system-i386 -enable-kvm -m size=${MEM}     \
-    -smp 2 -cpu host                            \
-    -drive file=${HDD},format=qcow2             \
+# -enable-kvm
+# -smp 2 -cpu host 
+qemu-system-i386 -m size=${MEM}     \
+    -drive file=${HDD}             \
     ${NET} -sdl -vga std                        \
     -device vt82c686b-usb-uhci,id=uhci          \
     -device usb-mouse,bus=uhci.0                \
