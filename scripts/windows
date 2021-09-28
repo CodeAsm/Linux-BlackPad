@@ -70,8 +70,9 @@ printf "\n"
 # -smp 2 -cpu host 
 qemu-system-i386 -m size=${MEM}     \
     -drive file=${HDD}             \
-    ${NET} -sdl -vga std                        \
-    -device vt82c686b-usb-uhci,id=uhci          \
-    -device usb-mouse,bus=uhci.0                \
+    ${NET} -sdl -vga std                  \
+    -usb                                             \
+    -device usb-ehci,id=ehci                         \
+    -device usb-mouse,bus=usb-bus.0 \
     ${SOUND}                                    \
     ${SERIAL} ${USB} ${CDfull}                  \

@@ -14,8 +14,10 @@ tunctl -t tap0 -u $USER
 brctl addif br0 tap0
 tunctl -t tap1 -u $USER
 brctl addif br0 tap1
+brctl addif br0 $NET
 ip link set tap0 up
 ip link set tap1 up
+ip link set $NET up
 systemctl restart iptables
 systemctl restart dnsmasq
 else
@@ -25,6 +27,7 @@ systemctl stop iptables
 systemctl stop dnsmasq
 ip link set tap0 down
 ip link set tap1 down
+ip link set $NET down
 ip link delete tap0
 ip link delete tap1
 ip link delete br0 type bridge
