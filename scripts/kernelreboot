@@ -1,0 +1,5 @@
+#!/bin/bash 
+sudo kexec -l /boot/vmlinuz-linux --initrd=/boot/initramfs-linux.img --reuse-cmdline
+sudo systemctl kexec
+
+#https://wiki.archlinux.org/title/Kexec#Rebooting_using_kexec
