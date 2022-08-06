@@ -1,5 +1,6 @@
 #!/bin/bash
 cd /home/codeasm/Games/Xbox/
 
-xemu/dist/xemu -device lpc47m157 -serial stdio -net tap,ifname=tap1,script=no -net nic,model=nvnet
+xemu/dist/xemu -device lpc47m157 -serial stdio -net tap,ifname=tap1,script=no -net nic,model=nvnet 
+#-drive if=none,id=C1A,file=peter/orig.bin,format=raw -device usb-storage,port=2.3.2,drive=C1A
 #-net nic,model=nvnet -net tap,ifname=tap0,script=no

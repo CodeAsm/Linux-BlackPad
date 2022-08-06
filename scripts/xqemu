@@ -82,4 +82,5 @@ xqemu/i386-softmmu/qemu-system-i386 \
 -cpu pentium3 -machine xbox,short_animation,bootrom=${MCPX} \
 -m ${MEM} -drive file=${HDD},index=0,media=disk,locked=on \
 -drive ${CDfull}index=1,media=cdrom -bios ${KERNEL} ${KD} \
--device usb-hub,port=3 -usb -device usb-xbox-gamepad,port=3.1 ${MU} ${EEPROM} ${MONITOR} ${NET}
+-device usb-hub,port=3 -usb -device usb-xbox-gamepad,port=3.1 ${MU} ${EEPROM} ${MONITOR} ${NET} \
+-usb -device usb-host,vendorid=0x090c,productid=0x1000,bus=usb-bus.0,port=3
