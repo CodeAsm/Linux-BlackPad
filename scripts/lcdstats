@@ -1,0 +1,24 @@
+#!/bin/bash 
+
+SERIAL="/dev/ttyUSB0"
+
+WGET=$(which wget)
+WGET_OPTS="-qO -"
+URL="http://ipinfo.io/ip"
+
+AWK=$(which awk)
+NIC="wlp3s0"
+
+#EXTIP=`$WGET $URL $WGET_OPTS`
+INTIP=`ip addr show $NIC| $AWK '$1 == "inet" {gsub(/\/.*$/, "", $2); print $2}'`
+
+echo "                                                         ">> $SERIAL
+echo $INTIP >> $SERIAL
+#echo $EXTIP >> $SERIAL
+
+
+MEM=$(top -bn2 | grep 'MiB Mem' | tail -1 | grep -P '(....|...) free,'| awk '{print $6 }')
+CPU=$(top -bn2 | grep '%Cpu' | tail -1 | grep -P '(....|...) id,'| awk '{print 100-$8 }')
+TEXT="Cpu usage: $CPU% Mem :$MEM" 
+echo $TEXT >> $SERIAL
+
