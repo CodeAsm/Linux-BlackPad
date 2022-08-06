@@ -1,14 +1,15 @@
-#!/bin/bash 
+    #!/bin/bash 
 UNDO=false
 USER=codeasm #or $(whoami)
 NET=enp12s0
+IP=66
 
 function network {
 if [ $UNDO != true  ]; then
 
     echo "[ Setting up bridge Network ]" 
 ip link add name br0 type bridge
-ip addr add dev br0 192.168.66.1/24
+ip addr add dev br0 192.168.$IP.1/24
 ip link set br0 up
 tunctl -t tap0 -u $USER
 brctl addif br0 tap0
@@ -46,6 +47,9 @@ case $key in
     shift; shift # past argument and value
     ;;-eth|-e)
     NET=$2
+    shift; shift # past argument and value
+    ;;-ip)
+    IP=$2
     shift; shift # past argument and value
     ;;
 esac
