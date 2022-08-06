@@ -8,7 +8,7 @@ case $key in
     CD="$2"
     shift; shift # past argument and value
     ;;-m|--memory|-mem)
-    MEM="$2"
+    MEM="$2" 
     shift; shift # past argument and value
     ;;-n|--net|-net)
     NET="$2"
@@ -33,9 +33,21 @@ case $key in
     shift # past argument and value
     ;;311|dos)
     HDD="hdd/dos.qcow2"
-    NET="-soundhw sb16,adlib,pcspk"
+    SOUND="-machine pc,pcspk-audiodev=alsa -device sb16,audiodev=alsa -device adlib,audiodev=alsa"
+    NET="-net nic,model=ne2k_pci,macaddr=E4:1F:13:AD:D5:02 -net tap,ifname=tap0,script=no"
     MEM="16"
+    MOUSE="-device vmware-svga"
     shift # past argument and value
+    ;;2000)
+    HDD="hdd/CISCO.qcow2"
+    SOUND="-machine pc,pcspk-audiodev=alsa -device adlib,audiodev=alsa -device sb16,audiodev=alsa"
+    NET="-net nic,model=rtl8139,macaddr=E4:1F:13:AD:D5:02 -net tap,ifname=tap0,script=no"
+    MEM="64"
+    MOUSE="-vga cirrus"
+    shift # past argument and value
+    ;;-e|--extra|-extra)
+    EXTRA="$2"
+    shift; shift
     ;;games)
     HDD="hdd/win-games.qcow2"
     MEM="2G"
@@ -45,9 +57,9 @@ esac
 done
 
 
-if [ -z $MEM ]; then
+if [ ${name+MEM} ]; then
     MEM="2G"; fi
-if [ -z $NET ]; then
+if [ ${name+NET} ]; then
     #NET="-net nic,model=rtl8139 -net user,smb=/home/codeasm/Projects/Emulation/smb/win "; fi
     NET=" -net nic,model=rtl8139,macaddr=E4:1F:13:AD:D5:02 -net tap,ifname=tap0,script=no "; fi
 if [ $CD ]; then
@@ -55,24 +67,33 @@ if [ $CD ]; then
 if [ -z $HDD ]; then
     HDD="hdd/GAMES.qcow2"; fi
 # -device ES1370
-if [ -z $SOUND ]; then
-    SOUND="-device AC97"; fi
- 
+if [ ${name+SOUND} ]; then
+    SOUND="-device AC97,audiodev=alsa"; fi
+if [ ${name+VID} ]; then
+    VID="-display sdl -vga std"; fi
+if [ ${name+MOUSE} ]; then
+    MOUSE="-device usb-ehci,id=ehci -device usb-mouse,bus=usb-bus.0"; fi
 
 if [ $CD ]; then    
 printf "ISO is \t\t %s" ${CD}; fi
 printf "\n\rMemory size \t\t %s" ${MEM}
 printf "\n\rHarddisk \t\t %s" ${HDD}
-printf "\n\rSoundcard \t\t %s" ${SOUND}
+#printf "\n\rSoundcard \t\t %s" ${SOUND}
 printf "\n"
 
 # -enable-kvm
 # -smp 2 -cpu host 
-qemu-system-i386 -m size=${MEM}     \
+qemu-system-i386 -m size=${MEM}    \
     -drive file=${HDD}             \
-    ${NET} -sdl -vga std                  \
-    -usb                                             \
-    -device usb-ehci,id=ehci                         \
-    -device usb-mouse,bus=usb-bus.0 \
-    ${SOUND}                                    \
-    ${SERIAL} ${USB} ${CDfull}                  \
+    -audiodev id=alsa,driver=alsa  \
+    ${NET} ${VID}                  \
+    -usb -monitor stdio            \
+    $MOUSE                         \
+    ${SOUND}                       \
+    ${SERIAL} ${USB} ${CDfull}     \
+    ${EXTRA}                       \
+
+    
+## Resources used
+## 
+## https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
