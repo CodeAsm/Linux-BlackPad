@@ -47,4 +47,4 @@ fi
 
 #(__git_ps1 "%s")
 #$(__git_ps1 "%s")
-. ~/.bash_profile
+
