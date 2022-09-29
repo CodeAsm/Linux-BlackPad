@@ -23,7 +23,15 @@ Ive decided to git clone this directory in the projects folder and manualy symli
 $ mkdir Projects
 $ cd ~/Projects
 $ git clone git@github.com:CodeAsm/Linux-BlackPad.git
-$ ln -s /home/codeasm/Projects/Linux-BlackPad/scripts/ scripts
+
+$ ln -s ~/Projects/Linux-BlackPad/scripts/ ~/scripts
+$ ln -s ~/Projects/Linux-BlackPad/.config/i3 ~/.config/i3
+$ ln -s ~/Projects/Linux-BlackPad/.config/i3status ~/.config/i3status
+$ ln -s ~/Projects/Linux-BlackPad/.Xresources ~/.Xresources
+$ ln -s ~/Projects/Linux-BlackPad/.bashrc ~/.bashrc
+$ ln -s ~/Projects/Linux-BlackPad/.bash_profile ~/.bash_profile
+
+
 ```
 
 
