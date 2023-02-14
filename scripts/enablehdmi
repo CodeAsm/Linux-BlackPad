@@ -1,0 +1,2 @@
+xrandr --output DP-3 --auto --right-of eDP-1
+# https://fedoramagazine.org/using-i3-with-multiple-monitors/

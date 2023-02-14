@@ -1,0 +1,13 @@
+LIM=60
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -l|-limit|-full)
+    LIM="$2"
+    shift; shift # past argument and value
+    ;;
+esac
+done
+
+sudo /home/codeasm/Projects/framework/framework-ec/build/bds/util/ectool fwchargelimit ${LIM}
