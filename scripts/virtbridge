@@ -1,7 +1,7 @@
-    #!/bin/bash 
+#!/bin/bash 
 UNDO=false
 USER=codeasm #or $(whoami)
-NET=enp12s0
+NET=enp0s13f0u1
 IP=66
 
 function network {
@@ -10,6 +10,7 @@ if [ $UNDO != true  ]; then
     echo "[ Setting up bridge Network ]" 
 ip link add name br0 type bridge
 ip addr add dev br0 192.168.$IP.1/24
+#ip addr add dev br0 10.0.2.1/24
 ip link set br0 up
 tunctl -t tap0 -u $USER
 brctl addif br0 tap0
@@ -21,6 +22,7 @@ ip link set tap1 up
 ip link set $NET up
 systemctl restart iptables
 systemctl restart dnsmasq
+sysctl -w net.ipv4.ip_forward=1
 else
 
     echo "[ Removing bridge Network ]" 
@@ -32,6 +34,7 @@ ip link set $NET down
 ip link delete tap0
 ip link delete tap1
 ip link delete br0 type bridge
+sysctl -w net.ipv4.ip_forward=0
 
 fi
 
@@ -44,7 +47,7 @@ key="$1"
 case $key in
     -d|-u)
     UNDO=true
-    shift; shift # past argument and value
+    shift;# past argument and value
     ;;-eth|-e)
     NET=$2
     shift; shift # past argument and value
@@ -58,7 +61,8 @@ done
 network
 
 #https://stackoverflow.com/questions/2953646/how-can-i-declare-and-use-boolean-variables-in-a-shell-script
-
+#https://linuxhint.com/ip-forwarding-net-ipv4-ip-forward/
+#https://wiki.gentoo.org/wiki/QEMU/Bridge_with_Wifi_Routing#Setting_up_Dnsmasq
 
 # expand-hosts
 # domain=router,192.168.66.66
