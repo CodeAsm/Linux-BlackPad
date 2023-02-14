@@ -5,7 +5,7 @@ WGET_OPTS="-qO -"
 URL="http://ipinfo.io/ip"
 
 AWK=$(which awk)
-NIC="wlp3s0"
+NIC="wlan0"
 
 EXTIP=`$WGET $URL $WGET_OPTS`
 INTIP=`ip addr show $NIC| $AWK '$1 == "inet" {gsub(/\/.*$/, "", $2); print $2}'`
